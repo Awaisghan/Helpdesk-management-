@@ -23,6 +23,7 @@ const ticketSchema = new Schema({
   attachmentCount: { type: Number, default: 0, min: 0, max: 3, required: true },
   responseDueAt: { type: Date, required: true, index: true }, resolutionDueAt: { type: Date, required: true, index: true },
   firstRespondedAt: { type: Date, default: null }, resolvedAt: { type: Date, default: null }, closedAt: { type: Date, default: null },
+  responseReminderSentAt: { type: Date, default: null }, resolutionReminderSentAt: { type: Date, default: null },
 }, { timestamps: true, strict: 'throw' });
 ticketSchema.index({ createdBy: 1, updatedAt: -1 });
 ticketSchema.index({ assignedAgent: 1, status: 1, updatedAt: -1 });

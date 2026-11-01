@@ -153,34 +153,6 @@ p {
 .sidebar-bottom {
   margin-top:auto;
   padding-top:40px}
-.help-card {
-  background:linear-gradient(125deg,#f1f7f2,#f7f9f6);
-  border:1px solid #e6eee6;
-  padding:18px 14px;
-  border-radius:10px;
-  margin-bottom:21px}
-.help-symbol {
-  display:inline-flex;
-  color:#4c8962;
-  margin-bottom:12px}
-.help-card h3 {
-  font-size:12px;
-  line-height:1.6;
-  max-width:145px}
-.help-card p {
-  font-size:11px;
-  color:#7a887e;
-  margin-top:7px}
-.help-card button {
-  background:#fff;
-  border:1px solid #dfe7df;
-  width:100%;
-  border-radius:6px;
-  padding:9px 4px;
-  font-size:10px;
-  margin-top:15px;
-  color:#53755d;
-  justify-content:space-between}
 .profile {
   display:flex;
   align-items:center;
@@ -783,9 +755,9 @@ tbody tr:hover {
   font-size:36px;
   color:#9fbb9d;
   margin-bottom:25px}
-.activity-panel,.setup-panel {
+.activity-panel {
   padding:30px}
-.activity-panel>p,.setup-panel>p {
+.activity-panel>p {
   color:var(--muted);
   margin:10px 0 25px;
   max-width:700px}
@@ -802,32 +774,6 @@ tbody tr:hover {
   font-size:11px;
   color:var(--muted);
   margin-top:5px}
-.setup-step {
-  padding:25px 0;
-  border-top:1px solid var(--line);
-  display:flex;
-  gap:22px}
-.setup-step>span {
-  color:#8dac86;
-  font-size:23px}
-.setup-step p {
-  margin-top:8px;
-  color:var(--muted);
-  font-size:12px}
-.setup-note {
-  background:#eff5eb;
-  border-radius:8px;
-  display:flex;
-  gap:14px;
-  padding:22px;
-  margin-top:16px}
-.setup-note svg {
-  flex-shrink:0;
-  color:#719367}
-.setup-note p {
-  margin-top:7px;
-  font-size:12px;
-  color:#7c8c76}
 .toast {
   position:fixed;
   bottom:25px;
@@ -1175,10 +1121,6 @@ main {
   margin-bottom:5px}
 .form-row {
   gap:12px}
-.setup-panel {
-  padding:22px}
-.setup-step {
-  gap:15px}
 .detail-meta {
   flex-wrap:wrap}
 .team-card {

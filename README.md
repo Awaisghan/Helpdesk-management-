@@ -26,7 +26,7 @@ Part 2 connects Auth.js Credentials sessions and role-specific dashboard/profile
 - CSV export of the filtered queue, team/category views and activity summary.
 - Native accessible dialogs, keyboard focus styles and mobile navigation.
 
-Signed-in ticket changes use the configured MongoDB database. CodxPy support categories cover bug reports, feature requests, technical support, and account access. Tickets support up to three private PNG, JPG, or PDF attachments (5 MB each); attachment downloads are proxied through a server route that checks the signed-in user's access to the ticket. Ticket create, assignment, public reply, and resolution events send HTML email notifications over SMTP; delivery errors do not undo ticket changes. Sample weekly chart data is illustrative; dashboard totals and activity use database records. Background SLA automation, deployment and isolated-database permission verification remain pending.
+Signed-in ticket changes use the configured MongoDB database. CodxPy support categories cover bug reports, feature requests, technical support, and account access. Tickets support up to three private PNG, JPG, or PDF attachments (5 MB each); attachment downloads are proxied through a server route that checks the signed-in user's access to the ticket. Ticket create, assignment, public reply, and resolution events send HTML email notifications over SMTP; delivery errors do not undo ticket changes. A secured SLA cron endpoint sends an agent reminder once near first-response and resolution deadlines, then auto-closes tickets 7 days after resolution if no later customer reply reopens them. Sample weekly chart data is illustrative; dashboard totals and activity use database records. Deployment and isolated-database permission verification remain pending.
 
 ## Checks
 
@@ -38,7 +38,7 @@ npm run build
 
 ## Next steps and manual setup
 
-See [PROJECT_PLAN.md](PROJECT_PLAN.md) for the three-part implementation plan and manual setup checklist. `.env.example` contains integration placeholders; copy it to `.env.local` and add an Atlas connection URI, a random Auth.js secret, one-time initial Admin values, Gmail SMTP app-password settings and Cloudinary API credentials. Run `npm run db:init` to create the first Admin only when none exists and safely seed four categories and four default SLA rules. Never commit real secrets. Run `npm run integrations:check` to verify Cloudinary authenticated upload/download and SMTP connectivity without sending an email; this check cleans up its temporary Cloudinary asset.
+See [PROJECT_PLAN.md](PROJECT_PLAN.md) for the three-part implementation plan and manual setup checklist. `.env.example` contains integration placeholders; copy it to `.env.local` and add an Atlas connection URI, a random Auth.js secret, one-time initial Admin values, Gmail SMTP app-password settings, Cloudinary API credentials, and a unique `CRON_SECRET` (at least 16 random characters). Run `npm run db:init` to create the first Admin only when none exists and safely seed four categories and four default SLA rules. Never commit real secrets. Run `npm run integrations:check` to verify Cloudinary authenticated upload/download and SMTP connectivity without sending an email; this check cleans up its temporary Cloudinary asset. `vercel.json` schedules the SLA endpoint every 15 minutes; configure the same `CRON_SECRET` in the deployment environment before scheduled runs.
 
 ## Structure
 

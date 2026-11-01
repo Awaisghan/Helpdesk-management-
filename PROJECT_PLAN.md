@@ -29,8 +29,8 @@ Remaining in Part 2: isolated-database verification of authorization boundaries 
 
 ## Part 3 — Integrations, verification and delivery (integration work complete; release work remains)
 
-1. Server-owned SLA deadlines and response/resolution timestamps; configurable rules.
-2. Secured idempotent auto-close job that respects later user replies; verify hosting schedule limits before deployment.
+1. Complete: server-owned SLA deadlines and response/resolution timestamps; configurable per-priority rules.
+2. Complete: secured, idempotent reminder and auto-close endpoint. It emails the assigned agent (or an active Admin when unassigned) once as each response/resolution target approaches, and closes tickets seven days after resolution. User replies reopen resolved tickets before the close job can close them.
 3. Complete: Nodemailer HTML notifications for ticket creation, assignment, public reply and resolution; missing SMTP and send failures are graceful.
 4. Complete: authorized Cloudinary authenticated uploads/downloads, up to 3 files per ticket, 5 MB per file, PNG/JPG/PDF validation, private metadata, and per-request ticket access checks.
 5. Safely repeatable development seed: 1 admin, 2 agents, 3 users, 4 categories, 15+ tickets, conversations and audit entries.
@@ -51,14 +51,16 @@ npm run dev
 Backend phase se pehle:
 
 - [x] MongoDB Atlas connection configured and verified; `helpdesk_db` initialized with the first Admin, CodxPy software support categories and four SLA rules. `.env.local` remains Git-ignored.
-- [x] Current Atlas count check: 1 Admin account, 4 categories and 4 SLA rules; 0 tickets, messages and activity records. No legacy/sample tickets were migrated.
 - [x] Cloudinary cloud name/API key/API secret `.env.local` mein set; authenticated upload/download and cleanup provider check passed.
 - [x] Gmail SMTP settings `.env.local` mein set; SMTP connection and authentication check passed. Koi test email send nahi hui.
 - [x] `AUTH_SECRET` generated locally. Admin bootstrap values are stored in `.env.local` and are never printed.
-- [ ] `CRON_SECRET` ke liye alag random value generate karein before enabling scheduled jobs.
+- [x] Local `.env.local` ke liye unique random `CRON_SECRET` generate kiya; value Git-ignored file mein hai aur output nahi ki.
+- [ ] Deployment environment mein wahi `CRON_SECRET` set karein before the scheduled job runs.
 - [ ] Passwords aur secrets chat, screenshots ya Git mein share na karein. `.env.local` Git ignore mein hai.
 - [ ] Launch phase mein apne GitHub/Vercel accounts connect karein aur environment variables Vercel project settings mein add karein.
 - [ ] App ke through real email delivery check karne ke liye ek ticket create/reply/assign/resolve karein; SMTP verify sirf login/connectivity check karta hai, sender acceptance aur inbox delivery nahi.
 - [ ] Attachment flow aur all three roles isolated database par verify karein; assignment ke liye actual screenshots capture karein.
 
-`npm run integrations:check` checks Cloudinary authenticated asset upload/download/cleanup and SMTP authentication without sending a message. SMTP delivery and ticket-level authorization still need an end-to-end app run.
+`npm run integrations:check` checks Cloudinary authenticated asset upload/download/cleanup and SMTP authentication without sending a message. Actual email delivery, scheduled SLA behavior against staged tickets, and ticket-level authorization still need end-to-end verification.
+
+`vercel.json` invokes `/api/cron/sla` every 15 minutes after deployment. Vercel automatically sends the configured `CRON_SECRET` as a Bearer token. Vercel Hobby allows only one cron run per day, so this 15-minute schedule requires Vercel Pro or a separate scheduler that can call the protected endpoint at least hourly. The local endpoint can be run manually with `Authorization: Bearer <CRON_SECRET>`; do not paste the secret into chat or commit it.
