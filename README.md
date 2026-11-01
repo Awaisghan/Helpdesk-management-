@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CodxPy Helpdesk
 
-## Getting Started
+A white, gray and green software support workspace for CodxPy, built in the existing Next.js App Router project. The root page sends signed-out visitors to sign in; signed-in users see persistent MongoDB data for their account role.
 
-First, run the development server:
+## Run locally
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. No credentials are needed for the preview.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Current implementation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The interface includes role-specific User/Agent/Admin workspaces, login and registration flows, profiles, internal-note presentation, SLA timers, skeletons and retry states. Dashboard and profile routes require a valid signed-in role; unauthenticated users cannot open sample dashboards.
 
-## Learn More
+Part 2 connects Auth.js Credentials sessions and role-specific dashboard/profile screens to MongoDB, with bcrypt password storage, User-only public registration, Mongoose models, validated APIs, ownership/assignment scopes, internal-note filtering, ticket creation/replies/status updates, Admin assignment, user promotion, category management, dashboard totals, and recent activity. Protected API requests re-check account activation and role against MongoDB.
 
-To learn more about Next.js, take a look at the following resources:
+## What works now
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Responsive sidebar and dashboard, preview metrics and illustrative Recharts analytics.
+- Ticket title/number/customer search, status and priority filters.
+- Preview ticket creation with required fields and length limits.
+- Ticket details, replies and status changes within the current session.
+- CSV export of the filtered queue, team/category views and activity summary.
+- Native accessible dialogs, keyboard focus styles and mobile navigation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Signed-in ticket changes use the configured MongoDB database. CodxPy support categories cover bug reports, feature requests, technical support, and account access. Tickets support up to three private PNG, JPG, or PDF attachments (5 MB each); attachment downloads are proxied through a server route that checks the signed-in user's access to the ticket. Ticket create, assignment, public reply, and resolution events send HTML email notifications over SMTP; delivery errors do not undo ticket changes. Sample weekly chart data is illustrative; dashboard totals and activity use database records. Background SLA automation, deployment and isolated-database permission verification remain pending.
 
-## Deploy on Vercel
+## Checks
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sh
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Next steps and manual setup
+
+See [PROJECT_PLAN.md](PROJECT_PLAN.md) for the three-part implementation plan and manual setup checklist. `.env.example` contains integration placeholders; copy it to `.env.local` and add an Atlas connection URI, a random Auth.js secret, one-time initial Admin values, Gmail SMTP app-password settings and Cloudinary API credentials. Run `npm run db:init` to create the first Admin only when none exists and safely seed four categories and four default SLA rules. Never commit real secrets. Run `npm run integrations:check` to verify Cloudinary authenticated upload/download and SMTP connectivity without sending an email; this check cleans up its temporary Cloudinary asset.
+
+## Structure
+
+- `src/app`: page entry, metadata and global design system.
+- `src/components/helpdesk.tsx`: role-specific workspace and preview/live UI.
+- `src/lib/preview-data.ts`: session-only interface fixtures.
+- `src/models`: database models and indexes.
+- `src/app/api`: Auth.js endpoints and protected ticket/profile APIs.
+- `public/codxpy.svg`: CodxPy software brand icon.
+
+Stack currently installed: Next.js, React, TypeScript, Tailwind CSS, Lucide React and Recharts. Backend dependencies include Mongoose, Auth.js, bcryptjs, Zod, Cloudinary and Nodemailer. Read the locally installed Next.js documentation before extending this version.

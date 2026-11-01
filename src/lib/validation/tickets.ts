@@ -1,0 +1,10 @@
+import { z } from 'zod';
+export const priorities = ['Low','Medium','High','Urgent'] as const;
+export const statuses = ['Open','In Progress','Waiting on User','Resolved','Closed'] as const;
+const objectId = z.string().regex(/^[a-f\d]{24}$/i, 'Invalid identifier.');
+export const createTicketSchema = z.object({ title: z.string().trim().min(5).max(140), description: z.string().trim().min(10).max(5000), category: objectId, priority: z.enum(priorities).optional() }).strict();
+export const replySchema = z.object({ body: z.string().trim().min(1).max(5000), isInternal: z.boolean().optional() }).strict();
+export const statusSchema = z.object({ status: z.enum(statuses) }).strict();
+export const assignmentSchema = z.object({ assignedAgent: objectId.nullable() }).strict();
+export const querySchema = z.object({ search: z.string().trim().max(120).optional(), status: z.enum(statuses).optional(), priority: z.enum(priorities).optional(), category: objectId.optional(), page: z.coerce.number().int().min(1).default(1), limit: z.coerce.number().int().min(1).max(50).default(10), sort: z.enum(['newest','oldest','updated']).default('updated') });
+export const profileSchema = z.object({ name: z.string().trim().min(2).max(80) }).strict();

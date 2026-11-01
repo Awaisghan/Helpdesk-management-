@@ -1,21 +1,34 @@
 {
-  "name": "fullstack-system",
+  "name": "codxpy-helpdesk",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:init": "node scripts/initialize-db.mjs",
+    "db:check": "node scripts/check-mongodb.mjs",
+    "db:rebrand": "node scripts/rebrand-support-categories.mjs",
+    "integrations:check": "node scripts/check-integrations.mjs"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
+    "lucide-react": "^1.66.0",
+    "mongoose": "^9.11.4",
     "next": "16.4.3",
+    "next-auth": "^5.0.0-beta.32",
+    "nodemailer": "^10.3.1",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "recharts": "^3.10.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
