@@ -14,7 +14,7 @@ Complete: User/Agent/Admin views, login/register/profile screens, assignment and
 
 ## Part 2 — Secure backend and real data (implementation started)
 
-Implemented: cached Mongoose connection; User, Category, Ticket, Message, ActivityLog, Counter and SLA rule models/indexes; Zod schemas; bcrypt/Auth.js Credentials/JWT sessions; User-only registration; profile API; protected paginated ticket APIs; server-side owner/assignment scope checks; internal-note filtering; admin-only assignment; SLA deadline calculations; dashboard aggregation; and `npm run db:init` for a guarded first Admin plus repeatable category/SLA-rule setup.
+Implemented: cached Mongoose connection; User, Category, Ticket, Message, ActivityLog, Counter and SLA rule models/indexes; Zod schemas; bcrypt/Auth.js Credentials/JWT sessions; User-only registration; profile API with name and unique email updates; protected paginated ticket APIs; server-side owner/assignment scope checks; internal-note filtering; admin-only assignment; SLA deadline calculations; dashboard aggregation; and `npm run db:init` for a guarded first Admin plus repeatable category/SLA-rule setup.
 2. `src/models`: User, Category, Ticket, Message, ActivityLog, atomic ticket Counter.
 3. `src/lib/auth`: Auth.js, bcryptjs credentials, session handling, account activation checks and fixed User registration role.
 4. `src/lib/authorization`: reusable role and resource checks; enforce ownership and agent assignment in every sensitive API operation.
@@ -23,7 +23,7 @@ Implemented: cached Mongoose connection; User, Category, Ticket, Message, Activi
 7. `src/app/api`: thin route handlers; database search, pagination, sort and dashboard aggregation.
 8. Replace UI fixtures with authorized API results and build role-specific routes.
 
-Connected: dashboard/profile reads and name updates; ticket listing/creation, replies, status changes and admin assignments; category and active-agent directories; dashboard totals and recent ticket activity. The signed-in dashboard enforces the account role in the route and server APIs.
+Connected: dashboard/profile reads and name/email updates; ticket listing/creation, replies, status changes and admin assignments; category and active-agent directories; dashboard totals and recent ticket activity. The signed-in dashboard enforces the account role in the route and server APIs.
 
 Remaining in Part 2: isolated-database verification of authorization boundaries and broader pagination/search controls. Admins can promote registered User accounts to Agent and manage ticket categories; account registration remains open to User role only.
 
