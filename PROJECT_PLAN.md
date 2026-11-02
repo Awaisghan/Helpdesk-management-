@@ -63,4 +63,4 @@ Backend phase se pehle:
 
 `npm run integrations:check` checks Cloudinary authenticated asset upload/download/cleanup and SMTP authentication without sending a message. Actual email delivery, scheduled SLA behavior against staged tickets, and ticket-level authorization still need end-to-end verification.
 
-`vercel.json` invokes `/api/cron/sla` every 15 minutes after deployment. Vercel automatically sends the configured `CRON_SECRET` as a Bearer token. Vercel Hobby allows only one cron run per day, so this 15-minute schedule requires Vercel Pro or a separate scheduler that can call the protected endpoint at least hourly. The local endpoint can be run manually with `Authorization: Bearer <CRON_SECRET>`; do not paste the secret into chat or commit it.
+`vercel.json` invokes `/api/cron/sla` once per day at 09:00 UTC to fit Vercel Hobby limits. Vercel automatically sends the configured `CRON_SECRET` as a Bearer token. Upgrade to Pro or use another scheduler to run it more often. The local endpoint can be run manually with `Authorization: Bearer <CRON_SECRET>`; do not paste the secret into chat or commit it.
